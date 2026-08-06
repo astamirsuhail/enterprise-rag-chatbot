@@ -1,13 +1,17 @@
-from google import genai
-from dotenv import load_dotenv
 import os
+import streamlit as st
+from dotenv import load_dotenv
+from google import genai
 
 load_dotenv()
 
-client = genai.Client(
-    api_key=os.getenv("GEMINI_API_KEY")
-)
+API_KEY = st.secrets.get("GEMINI_API_KEY") or os.getenv("GEMINI_API_KEY")
+if not API_KEY:
+    raise ValueError("GEMINI_API_KEY is not configured.")
 
+client = genai.Client(
+    api_key=API_KEY
+)
 
 def ask_gemini(context, question):
 
