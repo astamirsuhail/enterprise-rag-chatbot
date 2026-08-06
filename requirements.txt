@@ -1,12 +1,5 @@
 streamlit
-langchain
-langchain-community
-langchain-chroma
-chromadb
-sentence-transformers
-google-genai
-pypdf
-python-dotenvstreamlit
+
 google-genai
 
 langchain
