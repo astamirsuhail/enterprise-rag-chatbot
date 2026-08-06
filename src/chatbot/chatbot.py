@@ -18,8 +18,17 @@ def retrieve_documents(
 ):
 
     docs = db.similarity_search(
-        question,
-        k=top_k
+    question,
+    k=top_k
     )
+
+    print("="*50)
+    print("QUESTION:", question)
+    print("Retrieved:", len(docs))
+
+    for d in docs:
+        print(d.metadata)
+
+    print("="*50)
 
     return docs

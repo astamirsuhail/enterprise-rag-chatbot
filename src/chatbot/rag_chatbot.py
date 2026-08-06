@@ -88,12 +88,22 @@ Question:
 
 {question}
 """
-    response = client.models.generate_content(
-        model="gemini-3.5-flash",
-        contents=prompt
-    )
+    try:
+        response = client.models.generate_content(
+            model="gemini-3.5-flash",
+            contents=prompt
+        )
+        return response.text
 
-    return response.text
+    except Exception as e:
+        return f"""
+    ⚠️ AI service is temporarily unavailable.
+
+    Reason:
+    {str(e)}
+
+    Please try again in a few seconds.
+    """
 
     
     
