@@ -1,0 +1,12 @@
+google-genai
+python-dotenv
+
+langchain
+langchain-community
+langchain-text-splitters
+
+chromadb
+
+sentence-transformers
+
+pypdf
