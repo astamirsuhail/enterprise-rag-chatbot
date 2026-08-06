@@ -1,5 +1,6 @@
 import streamlit as st
 import time
+import os
 
 from src.workflows.workflow_engine import get_workflow
 from src.router.intent_router import detect_intent
@@ -38,11 +39,11 @@ if "messages" not in st.session_state:
 
 with st.sidebar:
 
-    st.title("🚗 AI Assistant")
+    st.title("🏢 Enterprise Knowledge AI Assistant")
 
     st.divider()
 
-    st.header("📚 I Can Help With")
+    st.header("Ask questions from your company knowledge base. Powered by RAG + Gemini AI.")
 
     st.markdown("""
     - ✈️ Business Travel
@@ -60,7 +61,7 @@ with st.sidebar:
 
     st.header("System Status")
 
-    st.success("🟢 Assistant Ready")
+    st.success("🟢 Knowledge Base Loaded")
 
     
     if st.button("🗑 Clear Chat"):
@@ -83,15 +84,15 @@ with st.sidebar:
 
     st.subheader("Knowledge Base")
 
-    st.metric("Documents", 10)
+    st.metric("Knowledge Documents", 10)
 
-    st.metric("Chunks", 70)
+    st.metric("Indexed Chunks", 70)
 
 # ---------------- Main Page ---------------- #
 
-st.title("🚗 Volkswagen AI Assistant")
+st.title("🏢 Enterprise Knowledge AI Assistant")
 
-st.caption("Enterprise RAG Chatbot")
+st.caption("Powered by LangChain • ChromaDB • Google Gemini • Streamlit")
 st.subheader("⚡ Quick Questions")
 
 col1, col2 = st.columns(2)
@@ -101,11 +102,19 @@ with col1:
     if st.button("✈️ Business Travel Policy"):
         st.session_state.quick_question = "Explain the Business Travel Policy."
 
-    if st.button("🏨 Hotel Policy"):
+    if st.button("🏨 Hotel Booking"):
         st.session_state.quick_question = "Explain the Hotel Policy."
 
     if st.button("💱 Forex Process"):
         st.session_state.quick_question = "Explain the Forex process."
+
+    if st.button("🔐 Information Security"):
+        st.session_state.quick_question = "Explain the Information Security Policy."
+
+    if st.button("🛒 Procurement SOP"):
+        st.session_state.quick_question = "Explain the Procurement SOP."
+
+    
 
 with col2:
 
@@ -118,28 +127,46 @@ with col2:
     if st.button("🏢 Facility SOP"):
         st.session_state.quick_question = "Explain Facility SOP."
 
+    if st.button("👤 Visitor Management"):
+        st.session_state.quick_question = "Explain the Visitor Management SOP."
+    
+    if st.button("🏠 Work From Home"):
+        st.session_state.quick_question = "Explain the Work From Home Policy."
+    
+
 if len(st.session_state.messages) == 0:
 
     st.info("""
-# 🚗 Welcome to Volkswagen AI Assistant
+# 🏢 Enterprise Knowledge AI Assistant
 
-Ask questions about Volkswagen Group Digital Solutions policies, HR processes, travel guidelines, facility SOPs, procurement, visa support and internal procedures.
+Ask questions from the company's internal knowledge base.
+
+### Supported Knowledge Areas
+
+- ✈ Business Travel
+- 🏨 Hotel Booking
+- 🛂 Visa Process
+- 👥 HR Policies
+- 🔐 Information Security
+- 🛒 Procurement SOP
+- 🏢 Facility Management
+- 👤 Visitor Management
+- 💱 Forex Policy
+- 🏠 Work From Home
 
 ### Try asking
 
-• Explain the Business Travel Policy
-
-• Who approves international travel?
-
 • What is the hotel booking policy?
 
-• Explain the leave approval process.
+• Explain visitor management SOP.
 
-• What is the Forex reimbursement process?
+• What is the procurement process?
 
-• What is the Visitor Management SOP?
+• How do I apply for business travel?
 
-The assistant answers using the uploaded company policies.
+• Explain the leave policy.
+
+• What is the work from home policy?
 """)
 
 
@@ -247,7 +274,7 @@ if question:
 
             st.divider()
 
-            st.markdown("### 💡 You may also need")
+            st.markdown("### 💡 Related Policies")
 
             recommendations = get_recommendations(intent)
 
@@ -274,18 +301,18 @@ if question:
     if query_type == "COMPANY":
 
         st.success(
-            f"Retrieved {len(docs)} relevant document chunks."
+            f"✅ Knowledge Search Completed\n\nRetrieved {len(docs)} relevant knowledge chunks."
         )
 
-        with st.expander("Retrieved Documents"):
+        with st.expander("Retrieved Knowledge"):
 
             for i, doc in enumerate(docs, start=1):
 
-                st.markdown(f"### Chunk {i}")
+                st.markdown(f"### 📄 Knowledge Chunk {i}")
 
                 st.write(doc.page_content)
 
-        with st.expander("📚 Sources"):
+        with st.expander("📚 Sources Documents"):
 
             sources = set()
 
@@ -297,4 +324,11 @@ if question:
 
             for source in sorted(sources):
 
-                st.write(f"📄 {source}")
+                filename = os.path.basename(source)
+
+                st.write(f"📄 {filename}")
+    st.divider()
+
+    st.caption(
+        "Enterprise Knowledge AI Assistant | Built with Streamlit, LangChain, ChromaDB & Google Gemini"
+    )   

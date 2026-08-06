@@ -1,12 +1,9 @@
-google-genai
-python-dotenv
-
+streamlit
 langchain
 langchain-community
-langchain-text-splitters
-
+langchain-chroma
 chromadb
-
 sentence-transformers
-
+google-genai
 pypdf
+python-dotenv
