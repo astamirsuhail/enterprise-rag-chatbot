@@ -11,24 +11,22 @@ def load_vector_db(embeddings):
     return db
 
 
-def retrieve_documents(
-    db,
-    question,
-    top_k=5
-):
+def retrieve_documents(db, question, top_k=5):
 
     docs = db.similarity_search(
-    question,
-    k=top_k
+        question,
+        k=top_k
     )
 
-    print("="*50)
+    print("=" * 60)
     print("QUESTION:", question)
     print("Retrieved:", len(docs))
 
-    for d in docs:
-        print(d.metadata)
+    for i, doc in enumerate(docs, start=1):
+        print(f"\nChunk {i}")
+        print("SOURCE:", doc.metadata.get("source", "Unknown"))
+        print(doc.page_content[:300])
 
-    print("="*50)
+    print("=" * 60)
 
     return docs
