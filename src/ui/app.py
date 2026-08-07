@@ -20,6 +20,14 @@ from src.chatbot.chatbot import (
     load_vector_db,
     retrieve_documents
 )
+
+import inspect
+
+st.write("retrieve_documents imported from:")
+st.code(inspect.getfile(retrieve_documents))
+
+
+
 from src.chatbot.rag_chatbot import ask_gemini
 
 st.set_page_config(
