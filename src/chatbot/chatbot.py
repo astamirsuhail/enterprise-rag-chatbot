@@ -22,6 +22,7 @@ def retrieve_documents(db, question, top_k=5):
 
     print("=" * 60)
     print("QUESTION:", question)
+    
     print("Retrieved:", len(docs))
 
     for i, doc in enumerate(docs, start=1):
