@@ -13,7 +13,7 @@ def load_vector_db(embeddings):
 
 def retrieve_documents(db, question, top_k=5):
 
-    raise Exception("retrieve_documents() is executing")
+    print("AAAAAAAAAAAAAAAA")
 
     docs = db.similarity_search(
         question,
