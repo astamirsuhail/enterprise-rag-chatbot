@@ -26,12 +26,12 @@ def retrieve_documents(db, question, top_k=5):
     for i, (doc, score) in enumerate(results, start=1):
 
         print(f"\nChunk {i}")
-        print("Relevance Score:", score)
+        print("Relevance Score:", round(score, 4))
         print("SOURCE:", doc.metadata.get("source", "Unknown"))
-        print(doc.page_content[:300])
+        print("CONTENT:", doc.page_content[:300])
 
-        # Only accept sufficiently relevant documents
-        if score >= 0.35:
+        # Temporary threshold for testing
+        if score >= 0.20:
             doc.metadata["relevance_score"] = score
             docs.append(doc)
 
