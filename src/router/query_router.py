@@ -1,13 +1,14 @@
 def classify_query(retrieved_docs):
 
     """
-    Returns:
+    Classifies the question based on retrieval results.
 
-    COMPANY
-    GENERAL
+    Returns:
+        COMPANY - relevant company knowledge was found
+        GENERAL - no sufficiently relevant company knowledge was found
     """
 
-    if len(retrieved_docs) > 0:
-        return "COMPANY"
+    if not retrieved_docs:
+        return "GENERAL"
 
-    return "GENERAL"
+    return "COMPANY"
