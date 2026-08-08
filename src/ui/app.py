@@ -226,12 +226,55 @@ if question:
     workflow = get_workflow(intent)
 
     # Retrieve relevant documents
+    # Retrieve relevant documents
     docs = retrieve_documents(
-    db,
-    question
+        db,
+        question
     )
 
     query_type = classify_query(docs)
+
+    # ---------------- RAG DEBUG ----------------
+
+    with st.expander("🔎 RAG Debug", expanded=True):
+
+        st.write("### Question")
+        st.write(question)
+
+        st.write("### Query Type")
+        st.write(query_type)
+
+        st.write("### Accepted Documents")
+        st.write(len(docs))
+
+        if docs:
+
+            for i, doc in enumerate(docs, start=1):
+
+                st.markdown(f"#### Document {i}")
+
+                st.write(
+                    "Relevance Score:",
+                    doc.metadata.get("relevance_score", "N/A")
+                )
+
+                st.write(
+                    "Source:",
+                    os.path.basename(
+                        doc.metadata.get("source", "Unknown")
+                    )
+                )
+
+                st.write(
+                    "Preview:",
+                    doc.page_content[:500]
+                )
+
+        else:
+
+            st.warning(
+                "No sufficiently relevant company documents were retrieved."
+            )
 
     if query_type == "COMPANY":
 
