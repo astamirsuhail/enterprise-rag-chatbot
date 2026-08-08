@@ -227,12 +227,32 @@ if question:
 
     # Retrieve relevant documents
     # Retrieve relevant documents
-    docs = retrieve_documents(
+    docs, debug_results = retrieve_documents(
         db,
         question
     )
 
     query_type = classify_query(docs)
+
+    with st.expander("🔍 Retrieval Debug"):
+
+        st.write("Question:", question)
+
+        st.write("Query Type:", query_type)
+
+        st.write("Top Retrieved Results:")
+
+        for item in debug_results:
+
+            st.markdown(
+                f"### Rank {item['rank']} — Score: {item['score']}"
+            )
+
+            st.write("Source:", item["source"])
+
+            st.write(item["content"])
+
+            st.divider()
 
     # ---------------- RAG DEBUG ----------------
 
